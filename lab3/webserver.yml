@@ -1,0 +1,26 @@
+---
+-  hosts: 127.0.0.1
+   become: yes
+   tasks:
+     - name: install apache2
+       apt: 
+         name: apache2
+         state: present
+         update_cache: yes
+         force_apt_get: yes
+     - name: change default port to 8080
+       copy:
+         src: ports.conf
+         dest: /etc/apache2/ports.conf
+     - name: upload php default page
+       copy:
+         src: default.php
+         dest: /var/www/default.php
+     - name: upload apache2 virtualhost on port 8080
+       copy:
+         src: 001-default.conf
+         dest: /etc/apache2/sites-enabled/001-default.conf
+     - name: restart apache
+       service: 
+         name: apache2 
+         state: restarted 
