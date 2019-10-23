@@ -1,0 +1,5 @@
+[backup_agent]
+infra01 ansible_host=127.0.0.1 ansible_port=2222
+
+[backup_server]
+infra02 ansible_host=127.0.0.1 ansible_port=3333

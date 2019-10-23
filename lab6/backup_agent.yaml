@@ -1,0 +1,16 @@
+---
+- hosts: backup_agent
+  become: yes
+  tasks: 
+    - name: create backup user
+      user:
+        name: backup
+        system: yes
+    - name: upload private and public keys
+      copy:
+        src: vm1_keys/{{ item }}
+        dest: /var/backups/.ssh/
+      with_items:
+        - vm1
+        - vm1.pub
+         

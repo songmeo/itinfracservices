@@ -1,0 +1,19 @@
+---
+- hosts: backup_server
+  become: yes
+  tasks:
+    - name: create system user backup
+      user:
+        name: backup
+        system: yes
+    - name: upload backup agent public key
+      authorized_key:
+        user: backup
+        state: present
+        key: "{{ lookup('file', '/home/kat/itis/lab6/vm1_keys/vm1.pub') }}"
+    - name: create /srv/backup
+      file:
+        path: /srv/backup
+        owner: backup
+        mode: 0775
+        state: directory

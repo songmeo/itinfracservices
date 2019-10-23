@@ -1,6 +1,6 @@
 ---
 - name: First play
-  hosts: 127.0.0.1
+  hosts: dns
   remote_user: kat
   become: yes
   tasks:
@@ -8,8 +8,7 @@
     ping:
     
   - name: Show proc list
-    command: 'ps'
-    register: abc
+    command: 'ps -e'
 
   - name: Show output
     debug:
@@ -25,3 +24,15 @@
     copy:
       dest: /etc/sudoers.d/user
       content: "kat   ALL = NOPASSWD: ALL"
+  
+- name: Initial setup for lab 5
+  hosts: dns
+  remote_user: kat
+  become: yes
+  tasks:
+    - name: setup interface
+      template:
+        src: templates/enp0s8.j2
+        dest: /etc/netplan/55-enp0s8.yaml
+    - name: netplan apply
+      shell: netplan apply
