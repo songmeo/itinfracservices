@@ -1,0 +1,23 @@
+- name: get timestamp
+  shell: "date +%s"
+  register: timestamp
+
+- name: check conf
+  shell: named-checkconf
+
+- name: restart bind
+  service:
+    name: bind9
+    state: restarted
+
+- name: get timestamp
+  shell: "date +%s"
+  register: timestamp
+
+- name: upload bind zone
+  template:
+    src: templates/db.meo.j2
+    dest: /etc/bind/db.meo
+
+- name: bind reload db
+  shell: rndc reload

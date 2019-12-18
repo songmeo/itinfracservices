@@ -1,0 +1,16 @@
+---
+- name: init set up
+  remote_user: kat
+  hosts: all
+  become: yes
+  tasks:
+  - name: Set ssh
+    authorized_key:    
+      user: kat
+      state: present
+      key: "{{ lookup('file', '/home/kat/.ssh/id_rsa.pub') }}"
+
+  - name: Disable sudo pass
+    copy:
+      dest: /etc/sudoers
+      content: "kat   ALL = NOPASSWD: ALL"

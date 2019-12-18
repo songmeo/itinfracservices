@@ -1,0 +1,17 @@
+---
+- name: node_exporter
+  hosts: linux
+  remote_user: kat
+  become: yes
+  roles:
+    - {role: 'mysqld_exporter', tags: 'mysql'}
+    - node_exporter
+    - custom_exporter
+    - {role: 'bind', tags: 'bind'}
+
+- name: prometheus
+  hosts: prometheus
+  remote_user: kat
+  become: yes
+  roles:
+    - prometheus
