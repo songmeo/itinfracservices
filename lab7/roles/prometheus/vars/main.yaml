@@ -19,3 +19,8 @@ jobs:
     targets:
       - ns1.meo.ttu
       - ns2.meo.ttu
+  - name: mysqld_exporter
+    port: 9104
+    targets:
+      - infra01.meo.ttu
+      - infra02.meo.ttu

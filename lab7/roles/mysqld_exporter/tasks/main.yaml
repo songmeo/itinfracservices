@@ -47,10 +47,17 @@
     state: present
     login_unix_socket: /var/run/mysqld/mysqld.sock
 
-- name: systemd node_exporter
+- name: upload .my.cnf
+  template:
+    src: .my.cnf.j2
+    dest: ~/.my.cnf
+
+- name: systemd mysqld_exporter
   template:
     src: mysqld_exporter.service.j2
     dest: /etc/systemd/system/mysqld_exporter.service
+  notify:
+    - daemon reload
 
 - name: start exporter
   service:

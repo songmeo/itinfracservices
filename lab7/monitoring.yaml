@@ -4,10 +4,10 @@
   remote_user: kat
   become: yes
   roles:
-    - {role: 'mysqld_exporter', tags: 'mysql'}
+    - {role: 'bind', tags: 'bind'}
     - node_exporter
     - custom_exporter
-    - {role: 'bind', tags: 'bind'}
+    - mysqld_exporter
 
 - name: prometheus
   hosts: prometheus

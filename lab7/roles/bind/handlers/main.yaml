@@ -10,10 +10,6 @@
     name: bind9
     state: restarted
 
-- name: get timestamp
-  shell: "date +%s"
-  register: timestamp
-
 - name: upload bind zone
   template:
     src: templates/db.meo.j2

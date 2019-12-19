@@ -1,3 +1,7 @@
+- name: register timestamp
+  shell: "date +%s"
+  register: timestamp
+
 - name: dns package
   apt:
     package: bind9
@@ -27,6 +31,14 @@
     - get timestamp
     - upload bind zone
     - restart bind
+    - bind reload db
+
+- name: config db
+  template:
+    src: templates/db.meo.j2
+    dest: /etc/bind/db.meo
+  when: dns_role == "master"
+  notify:
     - bind reload db
 
 - name: resolv.conf fix
