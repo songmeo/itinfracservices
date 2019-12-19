@@ -29,8 +29,3 @@ jobs:
     targets:
       - infra01.meo.ttu
       - infra02.meo.ttu
-  - name: bind_exporter
-    port: 9153
-    targets:
-      - infra01.meo.ttu
-      - infra02.meo.ttu
