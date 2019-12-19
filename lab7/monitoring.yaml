@@ -8,6 +8,8 @@
     - node_exporter
     - custom_exporter
     - mysqld_exporter
+    - apache_exporter
+    - bind_exporter
 
 - name: prometheus
   hosts: prometheus

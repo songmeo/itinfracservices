@@ -36,8 +36,6 @@
   apt:
     name: mysql-server
     state: present
-    update_cache: yes
-    force_apt_get: yes
 
 - name: create mysql user
   mysql_user:
@@ -46,6 +44,7 @@
     priv: "*.*:REPLICATION CLIENT,PROCESS"
     state: present
     login_unix_socket: /var/run/mysqld/mysqld.sock
+  ignore_errors: True
 
 - name: upload .my.cnf
   template:
