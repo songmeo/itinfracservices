@@ -1,9 +1,11 @@
 [Unit]
 Description=Bind Exporter
+Wants=network-online.target
+After=network-online.target
 
 [Service]
-User=root
 ExecStart=/opt/bind_exporter/bind_exporter
+Restart=always
 
 [Install]
 WantedBy=multi-user.target
