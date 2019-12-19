@@ -1,0 +1,11 @@
+[Unit]
+Description=ping check
+After=network.target
+
+[Service]
+User=root
+ExecStart=/opt/ping_check.sh &
+Type=simple
+
+[Install]
+WantedBy=multi-user.target

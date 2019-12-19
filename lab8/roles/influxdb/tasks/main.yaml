@@ -1,0 +1,44 @@
+- name: install
+  apt:
+    package: ['influxdb', 'influxdb-client', 'python-pip']
+
+- pip:
+    name: ['requests', 'influxdb']
+
+- name: Create database
+  influxdb_database:
+    database_name: "rtt"
+
+- name: download telegraf
+  get_url:
+    url: https://dl.influxdata.com/telegraf/releases/telegraf_1.12.6-1_amd64.deb
+    dest: /opt/telegraf_1.12.6-1_amd64.deb
+
+- name: install telegraf
+  apt:
+    deb: /opt/telegraf_1.12.6-1_amd64.deb
+
+- template:
+    src: telegraf.conf
+    dest: /etc/telegraf/telegraf.conf
+  notify:
+    - restart telegraf
+
+- name: upload the script
+  copy:
+    src: ~/itis/lab8/ping_check.sh
+    dest: /opt/ping_check.sh
+    mode: a+x
+
+- name: make ping check a service
+  template:
+    src: ping_check.service.j2
+    dest: /etc/systemd/system/ping_check.service
+  notify:
+    - daemon reload
+
+- name: start ping check
+  service:
+    name: ping_check
+    state: started
+    enabled: yes
