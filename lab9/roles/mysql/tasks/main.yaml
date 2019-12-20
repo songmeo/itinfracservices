@@ -18,8 +18,8 @@
       
 - name: create mysql user
   mysql_user:
-    name: "{{ db_user }}"
-    password: "{{ db_password }}"
+    name: test
+    password: test
     priv: '*.*:ALL'
     login_unix_socket: /var/run/mysqld/mysqld.sock
 

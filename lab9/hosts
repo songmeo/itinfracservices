@@ -3,3 +3,7 @@ infra01 ansible_host=127.0.0.1 ansible_port=2222
 
 [wordpress]
 infra02 ansible_host=127.0.0.1 ansible_port=3333
+
+[linux]
+infra01 ansible_host=127.0.0.1 ansible_port=2222
+infra02 ansible_host=127.0.0.1 ansible_port=3333
