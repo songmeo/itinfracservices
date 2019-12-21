@@ -1,9 +1,13 @@
+[linux]
+infra01 ansible_host=192.168.56.4
+infra02 ansible_host=192.168.56.5
+
 [mysql]
-infra02 ansible_host=127.0.0.1 ansible_port=2222
+infra02 ansible_host=192.168.56.5
 
 [wordpress]
-infra01 ansible_host=127.0.0.1 ansible_port=3333
+infra01 ansible_host=192.168.56.4
 
-[linux]
-infra01 ansible_host=127.0.0.1 ansible_port=2222
-infra02 ansible_host=127.0.0.1 ansible_port=3333
+[prometheus]
+infra01 ansbile_host=192.168.56.4
+

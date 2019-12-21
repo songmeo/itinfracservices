@@ -1,0 +1,22 @@
+- name: install docker
+  apt: 
+    name: docker.io
+    update_cache: yes
+    state: present
+
+- name: install pip
+  apt:
+    name: python3-pip
+
+- name: install docker-py
+  pip:
+    name: docker-py
+
+- name: start grafana container
+  docker_container:
+    name: grafana
+    image: grafana/grafana
+    state: started
+    ports:
+      - "3000:3000"
+

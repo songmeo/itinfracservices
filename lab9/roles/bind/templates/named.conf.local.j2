@@ -1,0 +1,34 @@
+zone "meo.ttu" {
+{% if dns_role == "master" %}
+	type master;
+	file "/etc/bind/db.meo";
+  allow-transfer {
+    192.168.56.5;
+    192.168.56.1;
+  };
+	notify yes;
+{% else %}
+  type slave;
+  file "/var/lib/bind/db.meo";
+  masters {
+    {{ master_ip }};
+  };
+{% endif %}
+};
+
+zone "56.168.192.in-addr.arpa" {
+{% if dns_role == "master" %}
+	type master;
+	file "/etc/bind/db.meo.ptr";
+  allow-transfer {
+    192.168.56.4;
+    192.168.56.1;
+  };
+{% else %}
+  type slave;
+  file "/var/lib/bind/db.meo.ptr";
+  masters {
+    {{ master_ip }};
+  };
+{% endif %}
+};
