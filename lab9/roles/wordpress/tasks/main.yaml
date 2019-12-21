@@ -1,0 +1,26 @@
+- name: install docker
+  apt:
+    name: docker.io
+    update_cache: yes
+    state: present
+
+- name: install pip
+  apt:
+    name: python3-pip
+
+- name: install docker-py
+  pip:
+    name: docker-py
+
+- name: start wordpress container
+  docker_container:
+    name: wordpress
+    image: wordpress
+    state: started
+    ports:
+      - "8080:80"
+    env:
+      WORDPRESS_DB_HOST: 192.168.56.5:3306
+      WORDPRESS_DB_NAME: "{{ db }}"
+      WORDPRESS_DB_USER: "{{ db_user }}"
+      WORDPRESS_DB_PASSWORD: "{{ db_password }}"
