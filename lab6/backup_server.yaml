@@ -5,7 +5,6 @@
     - name: create system user backup
       user:
         name: backup
-        system: yes
     - name: upload backup agent public key
       authorized_key:
         user: backup

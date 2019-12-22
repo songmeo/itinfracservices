@@ -1,0 +1,81 @@
+---
+- hosts: frontend_servers
+  become: yes
+  tasks:
+    - name: install apache2
+      apt:
+        name: apache2
+        state: present
+        update_cache: yes
+        force_apt_get: yes
+
+    - name: install php mysql module
+      apt: 
+        name: php-mysql
+        state: present
+        update_cache: yes
+        force_apt_get: yes
+
+    - name: install wordpress 
+      get_url:
+        url=https://wordpress.org/latest.tar.gz
+        dest=/tmp/wordpress.tar.gz
+
+    - name: extract wordpress
+      unarchive: src=/tmp/wordpress.tar.gz dest=/var/www/ copy=no
+      become: yes
+    
+    - name: update default page
+      copy:
+        src: ~/itis/lab4/000-default.conf
+        dest: /etc/apache2/sites-enabled/ 
+
+    - name: restart apache
+      service:
+        name: apache2
+        state: restarted
+             
+- hosts: database_servers    
+  become: yes
+  vars:
+    db: test
+    db_user: test
+    db_password: test
+  tasks:
+    - name: install mysql server
+      apt:
+        name: mysql-server
+        state: present
+        update_cache: yes
+        force_apt_get: yes
+
+    - name: install pip
+      apt:
+        name: python3-pip
+        state: present
+        update_cache: yes
+        force_apt_get: yes
+
+    - name: install PyMySQL
+      pip:
+        name: PyMySQL
+      
+    - name: create mysql user
+      mysql_user:
+        name: "{{ db_user }}"
+        password: "{{ db_password }}"
+        priv: '*.*:ALL'
+        login_unix_socket: /var/run/mysqld/mysqld.sock
+
+    - name: Create mysql database
+      mysql_db:
+        login_unix_socket: /var/run/mysqld/mysqld.sock 
+        name: "{{ db }}"
+        state: present
+ 
+    - name:
+      template:
+        src: ~/itis/lab4/wp-config.php
+        dest: /var/www/wordpress/
+ 
+  

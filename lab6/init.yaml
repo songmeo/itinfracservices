@@ -1,0 +1,38 @@
+---
+- name: First play
+  hosts: dns
+  remote_user: kat
+  become: yes
+  tasks:
+  - name: First task
+    ping:
+    
+  - name: Show proc list
+    command: 'ps -e'
+
+  - name: Show output
+    debug:
+      var: abc.stdout_lines
+
+  - name: Set ssh
+    authorized_key:    
+      user: kat
+      state: present
+      key: "{{ lookup('file', '/home/kat/.ssh/id_rsa.pub') }}"
+
+  - name: Disable sudo pass
+    copy:
+      dest: /etc/sudoers.d/user
+      content: "kat   ALL = NOPASSWD: ALL"
+  
+- name: Initial setup for lab 5
+  hosts: dns
+  remote_user: kat
+  become: yes
+  tasks:
+    - name: setup interface
+      template:
+        src: templates/enp0s8.j2
+        dest: /etc/netplan/55-enp0s8.yaml
+    - name: netplan apply
+      shell: netplan apply

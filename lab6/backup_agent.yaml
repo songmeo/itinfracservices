@@ -5,7 +5,6 @@
     - name: create backup user
       user:
         name: backup
-        system: yes
     - name: upload private and public keys
       copy:
         src: vm1_keys/{{ item }}
