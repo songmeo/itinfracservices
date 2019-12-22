@@ -1,0 +1,10 @@
+- name: create backup user
+  user:
+    name: backup
+
+- name: create directory
+  file:
+    path: /var/backups/.ssh
+    state: directory
+    mode: '0755'
+

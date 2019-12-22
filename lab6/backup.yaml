@@ -1,0 +1,9 @@
+---
+- name: backup
+  become: yes
+  hosts: backup_agent
+  roles:
+    - backup_agent
+  tags:
+    - backup_agent
+  

@@ -8,6 +8,8 @@ infra02 ansible_host=192.168.56.5
 [wordpress]
 infra01 ansible_host=192.168.56.4
 
-[prometheus]
-infra01 ansbile_host=192.168.56.4
+[backup_server]
+infra01 ansible_host=192.168.56.5
 
+[backup_agent]
+infra02 ansible_host=192.168.56.4
