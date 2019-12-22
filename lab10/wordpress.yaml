@@ -1,0 +1,23 @@
+---
+- name: setup
+  become: yes
+  hosts: linux
+  roles:
+    - init
+  tags:
+    - init
+
+- name: mysql server
+  become: yes
+  hosts: mysql
+  roles:
+    - mysql
+  tags:
+    - mysql
+
+- name: wordpress
+  become: yes
+  hosts: wordpress
+  roles:
+    - {role: wordpress, tags: wordpress}
+    - {role: haproxy, tags: haproxy}

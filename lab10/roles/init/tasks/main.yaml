@@ -1,0 +1,17 @@
+- name: set ssh
+  authorized_key:
+    user: kat
+    state: present
+    key: "{{ lookup('file', '/home/kat/.ssh/id_rsa.pub') }}"
+
+- name: disable sudo pass
+  copy:
+    dest: /etc/sudoers.d/user
+    content: "kat ALL=(ALL) NOPASSWD:ALL"
+
+- name: enp0s8
+  template:
+    src: templates/enp0s8.j2
+    dest: /etc/netplan/55-enp0s8.j2
+  notify:
+    - netplan apply
