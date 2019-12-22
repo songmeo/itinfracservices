@@ -1,0 +1,30 @@
+- name: install mysql server
+  apt:
+    name: mysql-server
+    state: present
+    update_cache: yes
+    force_apt_get: yes
+
+- name: install pip
+  apt:
+    name: python3-pip
+    state: present
+    update_cache: yes
+    force_apt_get: yes
+
+- name: install PyMySQL
+  pip:
+    name: PyMySQL
+      
+- name: create mysql user
+  mysql_user:
+    name: "{{ db_user }}"
+    password: "{{ db_password }}"
+    priv: '*.*:ALL'
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+
+- name: Create mysql database
+  mysql_db:
+    login_unix_socket: /var/run/mysqld/mysqld.sock 
+     name: "{{ db }}"
+     state: present

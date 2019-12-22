@@ -1,0 +1,34 @@
+- name: install apache2
+  apt:
+    name: apache2
+    state: present
+    update_cache: yes
+    force_apt_get: yes
+
+- name: install php mysql module
+  apt: 
+    name: php-mysql
+    state: present
+    update_cache: yes
+    force_apt_get: yes
+
+- name: install wordpress 
+  get_url:
+    url=https://wordpress.org/latest.tar.gz
+    dest=/tmp/wordpress.tar.gz
+
+- name: extract wordpress
+  unarchive: src=/tmp/wordpress.tar.gz dest=/var/www/ copy=no
+  become: yes
+    
+- name: update default page
+  copy:
+    src: templates/000-default.conf
+    dest: /etc/apache2/sites-enabled/ 
+  notify: 
+    - restart apache
+
+- name:
+  template:
+    src: templates/wp-config.php
+    dest: /var/www/wordpress/

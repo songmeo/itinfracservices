@@ -1,0 +1,56 @@
+- name: register timestamp
+  shell: "date +%s"
+  register: timestamp
+
+- name: dns package
+  apt:
+    package: bind9
+
+- name: config bind
+  template:
+    src: templates/named.conf.options.j2
+    dest: /etc/bind/named.conf.options
+  notify:
+    - restart bind
+    - check conf
+
+- name: config bind.local
+  template:
+    src: templates/named.conf.local.j2
+    dest: /etc/bind/named.conf.local
+  notify:
+    - check conf
+    - restart bind
+
+- name: check zone hash
+  copy:
+    content: "{{ records|hash }}"
+    dest: /etc/bind/db.meo.hash
+  when: dns_role == "master"
+  notify:
+    - get timestamp
+    - upload bind zone
+    - restart bind
+    - bind reload db
+
+- name: config db
+  template:
+    src: templates/db.meo.j2
+    dest: /etc/bind/db.meo
+  when: dns_role == "master"
+  notify:
+    - bind reload db
+
+- name: resolv.conf fix
+  template:
+    src: resolv.conf.j2
+    dest: /etc/resolv.conf
+
+- name: config db ptr
+  template:
+    src: templates/db.meo.ptr.j2
+    dest: /etc/bind/db.meo.ptr
+  when: dns_role == "master"
+  notify:
+    - restart bind
+    - bind reload db

@@ -1,0 +1,7 @@
+---
+- name: bind
+  hosts: linux
+  remote_user: kat
+  become: yes
+  roles:
+    - bind
