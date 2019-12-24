@@ -24,7 +24,7 @@
     owner: b4ckup
   when: role == "mysql"
         
-- name: upload backup script
+- name: mysql backup script
   template:
     src: templates/mysql.sh.j2
     dest: /home/b4ckup/mysql.sh
@@ -32,7 +32,7 @@
     mode: a+x
   when: role == "mysql"
   
-- name: make a cron job
+- name: cron job for mysql
   cron:
     name: "backup mysql"
     minute: "0"
@@ -41,3 +41,40 @@
     user: b4ckup
     job: "/home/b4ckup/mysql.sh"
   when: role == "mysql"
+
+- name: bind backup script
+  copy:
+    src: templates/bind.sh
+    dest: /home/b4ckup/bind.sh
+    owner: b4ckup
+    mode: a+x
+  when: dns_role == "master"
+
+- name: cron job for bind
+  cron:
+    name: "backup bind"
+    minute: "0"
+    hour: "0"
+    weekday: "1,4"
+    user: b4ckup
+    job: "/home/b4ckup/bind.sh"
+  when: dns_role == "master"
+
+- name: wordpress backup script
+  copy:
+    src: templates/wordpress.sh
+    dest: /home/b4ckup/wordpress.sh
+    owner: b4ckup
+    mode: a+x
+  when: role == "wordpress"
+
+- name: cron job for wordpress
+  cron:
+    name: "backup wordpress"
+    minute: "0"
+    hour: "0"
+    weekday: "1,4"
+    user: b4ckup
+    job: "/home/b4ckup/wordpress.sh"
+  when: role == "wordpress"
+

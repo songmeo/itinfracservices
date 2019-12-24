@@ -1,22 +1,20 @@
 - Coverage:
   + mysqldump
-  + bind db files, named.conf files, resolv.conf
-  + wordpress config file
+  + bind /etc/bind/
+  + wordpress /var/ww/wordpress/
+  + apache /etc/apache2/sites-enabled/
 
-- RPO:
-
-- Versioning:
-  + We should have 2 versions of every backups.
+- Frequency:
+  + incremental backups will be done every day
+  + differential backups will be done every week
+  + full backups will be done every month
 
 - Retention:
-  + 
+  + after differential backups are made, incremental backups will be removed.
+  + after full backup, differential backups will be removed.
+  + full backup are retained until the next full backup.
 
 - Usability:
-  +
-
-- Restoration criteria:
-  + 
-
-
-- RTO: I think It will take couple of hours or maximum a day to recover all services.
-
+  + To restore mysql from mysqldump do:
+    rsync -rv backup-server:/srv/backup/db-server/* /srv/backup/restore/
+    mysql {{ db_name }} < /srv/backup/restore/{{ db_name }}.sql

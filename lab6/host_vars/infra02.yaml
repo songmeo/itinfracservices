@@ -1,2 +1,4 @@
 ---
 role: mysql
+dns_role: slave
+master_ip: 192.168.56.4
