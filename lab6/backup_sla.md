@@ -25,7 +25,8 @@
     
     	rsync -rv backup-server:/srv/backup/wordpress/* /var/www/wordpress/
     
-   	rsync -rv backup-server:/srv/backup/apache/* /etc/apache2/sites-enabled/
+   	
+	rsync -rv backup-server:/srv/backup/apache/* /etc/apache2/sites-enabled/
 
   + To restore bind:
 
