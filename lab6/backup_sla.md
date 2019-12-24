@@ -16,5 +16,6 @@
 
 - Usability:
   + To restore mysql from mysqldump do:
+
     rsync -rv backup-server:/srv/backup/db-server/* /srv/backup/restore/
     mysql {{ db_name }} < /srv/backup/restore/{{ db_name }}.sql
