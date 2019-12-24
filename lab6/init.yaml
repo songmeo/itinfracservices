@@ -1,0 +1,6 @@
+---
+- name: setup
+  become: yes
+  hosts: legacy_linux
+  roles:
+    - init

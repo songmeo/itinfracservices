@@ -1,3 +1,7 @@
+[legacy_linux]
+infra01 host=127.0.0.1 port=2222
+infra02 host=127.0.0.1 port=3333
+
 [linux]
 infra01 ansible_host=192.168.56.4
 infra02 ansible_host=192.168.56.5
@@ -9,7 +13,8 @@ infra02 ansible_host=192.168.56.5
 infra01 ansible_host=192.168.56.4
 
 [backup_server]
-infra01 ansible_host=192.168.56.5
+infra02 ansible_host=192.168.56.5
 
 [backup_agent]
-infra02 ansible_host=192.168.56.4
+infra01 ansible_host=192.168.56.4
+infra02 ansible_host=192.168.56.5

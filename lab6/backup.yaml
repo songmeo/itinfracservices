@@ -1,9 +1,17 @@
 ---
-- name: backup
+- name: backup agent
   become: yes
   hosts: backup_agent
   roles:
     - backup_agent
   tags:
     - backup_agent
-  
+
+- name: backup server
+  become: yes
+  hosts: backup_server
+  roles:
+    - backup_server
+  tags:
+    - backup_server
+

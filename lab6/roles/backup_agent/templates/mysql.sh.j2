@@ -1,0 +1,4 @@
+#!/bin/bash
+mkdir /tmp/db-server
+mysqldump "{{ db }}" > /tmp/db-server/"{{ db }}".sql
+rsync -rv /tmp/db-server/ 192.168.56.5:/srv/backup/db-server/

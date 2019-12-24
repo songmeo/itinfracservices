@@ -1,10 +1,43 @@
 - name: create backup user
   user:
-    name: backup
+    name: b4ckup
+    generate_ssh_key: yes
 
 - name: create directory
   file:
-    path: /var/backups/.ssh
+    path: /home/b4ckup/.ssh
     state: directory
     mode: '0755'
 
+- name: upload key pair
+  copy:
+    src: "{{ item }}"
+    dest: /home/b4ckup/.ssh/
+  with_items:
+    - templates/id_rsa
+    - templates/id_rsa.pub
+
+- name: upload mysqldump cnf file
+  template:
+    src: templates/.my.cnf.j2
+    dest: /home/b4ckup/.my.cnf
+    owner: b4ckup
+  when: role == "mysql"
+        
+- name: upload backup script
+  template:
+    src: templates/mysql.sh.j2
+    dest: /home/b4ckup/mysql.sh
+    owner: b4ckup
+    mode: a+x
+  when: role == "mysql"
+  
+- name: make a cron job
+  cron:
+    name: "backup mysql"
+    minute: "0"
+    hour: "0"
+    weekday: "1,4"
+    user: b4ckup
+    job: "/home/b4ckup/mysql.sh"
+  when: role == "mysql"

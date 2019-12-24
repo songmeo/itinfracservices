@@ -1,4 +1,21 @@
 - name: add user backup
   user:
-    name: backup
+    name: b4ckup
 
+- name: create directory
+  file:
+    path: /home/b4ckup/.ssh
+    state: directory
+    mode: '0755'
+
+- name: upload backup agent public key
+  copy:
+    src: ~/itis/lab6/roles/backup_server/templates/id_rsa.pub
+    dest: /home/b4ckup/.ssh/authorized_keys
+    owner: b4ckup
+
+- name: create dir /srv/backup
+  file:
+    path: /srv/backup
+    state: directory
+    owner: b4ckup
