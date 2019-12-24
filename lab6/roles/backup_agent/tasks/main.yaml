@@ -37,7 +37,6 @@
     name: "backup mysql"
     minute: "0"
     hour: "0"
-    weekday: "1,4"
     user: b4ckup
     job: "/home/b4ckup/mysql.sh"
   when: role == "mysql"
@@ -55,7 +54,6 @@
     name: "backup bind"
     minute: "0"
     hour: "0"
-    weekday: "1,4"
     user: b4ckup
     job: "/home/b4ckup/bind.sh"
   when: dns_role == "master"
@@ -73,7 +71,6 @@
     name: "backup wordpress"
     minute: "0"
     hour: "0"
-    weekday: "1,4"
     user: b4ckup
     job: "/home/b4ckup/wordpress.sh"
   when: role == "wordpress"
