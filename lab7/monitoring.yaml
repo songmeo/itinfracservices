@@ -1,19 +1,23 @@
----
-- name: node_exporter
+---  
+- name: bind and node_exporter
   hosts: linux
-  remote_user: kat
   become: yes
   roles:
-    - {role: 'bind', tags: 'bind'}
+    - bind
     - node_exporter
-    - custom_exporter
-    - mysqld_exporter
-    - apache_exporter
 
-- name: prometheus
-  hosts: prometheus
-  remote_user: kat
+- name: mysql exporter
+  hosts: mysql
   become: yes
   roles:
-    - prometheus
+    - mysqld_exporter
+  tags:
+    - mysqld 
+
+- name: mysql_exporter
+  hosts: prometheus 
+  become: yes
+  roles:
+    - {role: prometheus, tags: prometheus}
+    - apache_exporter
     - grafana

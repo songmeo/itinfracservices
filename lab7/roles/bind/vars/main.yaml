@@ -17,13 +17,13 @@ records:
   - type: A
     entries:
       - name: infra01.meo.ttu.
-        address: 192.168.56.3
-      - name: infra02.meo.ttu.
         address: 192.168.56.4
+      - name: infra02.meo.ttu.
+        address: 192.168.56.5
       - name: infra.meo.ttu.
         addresses:
-          - 192.168.56.3
           - 192.168.56.4
+          - 192.168.56.5
   - type: CNAME
     entries:
       - name: ns

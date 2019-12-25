@@ -1,6 +1,12 @@
 [linux]
-infra01 ansible_host=192.168.56.3
-infra02 ansible_host=192.168.56.4
+infra01 ansible_host=192.168.56.4
+infra02 ansible_host=192.168.56.5
 
 [prometheus]
-infra01 ansible_host=192.168.56.3
+infra01 ansible_host=192.168.56.4
+
+[mysql]
+infra02 ansible_host=192.168.56.5
+
+[wordpress]
+infra01 ansible_host=192.168.56.4
