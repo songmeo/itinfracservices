@@ -4,7 +4,7 @@
   become: yes
   roles:
     - bind
-    - node_exporter
+    - { role: node_exporter, tags: node }
 
 - name: mysql exporter
   hosts: mysql
@@ -14,10 +14,17 @@
   tags:
     - mysqld 
 
-- name: mysql_exporter
+- name: apache exporter
+  hosts: wordpress
+  become: yes
+  roles:
+    - apache_exporter
+  tags:
+    - apache 
+
+- name: 
   hosts: prometheus 
   become: yes
   roles:
     - {role: prometheus, tags: prometheus}
-    - apache_exporter
-    - grafana
+    - {role: grafana, tags: grafana}
