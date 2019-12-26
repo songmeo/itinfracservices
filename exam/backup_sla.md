@@ -1,8 +1,6 @@
 - Coverage:
   + mysqldump
-  + bind /etc/bind/
-  + wordpress /var/ww/wordpress/
-  + apache /etc/apache2/sites-enabled/
+  + influxdb
 
 - Frequency:
   + incremental backups will be done every day
