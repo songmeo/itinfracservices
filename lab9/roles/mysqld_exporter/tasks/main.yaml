@@ -1,65 +1,44 @@
-- name: check if sql exporter exists
-  stat:
-    path: /opt/mysqld_exporter-0.12.1.linux-amd64.tar.gz
-  register: stat_result
-
-- name: Download
-  get_url: 
-    url: https://github.com/prometheus/mysqld_exporter/releases/download/v0.12.1/mysqld_exporter-0.12.1.linux-amd64.tar.gz
-    dest: /opt/
-  when: stat_result.stat.exists == False
-
-- name: folder
-  file:
-    path: /opt/mysqld_exporter
-    state: directory
-    mode: '0755'
-
-- name: untar
-  unarchive:
-    src: /opt/mysqld_exporter-0.12.1.linux-amd64.tar.gz
-    dest: /opt/mysqld_exporter
-    remote_src: yes
-    extra_opts:
-      - --strip-components=1
-
-- name: install pip
-  apt:
-    name: python3-pip
-    state: present
-
-- name: install pymysql
-  pip:
-    name: PyMySQL
-
-- name: install mysql server
-  apt:
-    name: mysql-server
-    state: present
-
 - name: create mysql user
   mysql_user:
-    name: mysqld_exporter
-    password: password
+    name: "{{ db_user }}"
+    password: "{{ db_password }}"
     priv: "*.*:REPLICATION CLIENT,PROCESS"
-    state: present
     login_unix_socket: /var/run/mysqld/mysqld.sock
-  ignore_errors: True
+#  ignore_errors: True
+  tags:
+    - create_user
 
-- name: upload .my.cnf
-  template:
-    src: .my.cnf.j2
-    dest: ~/.my.cnf
+- name: install
+  apt:
+    name: prometheus-mysqld-exporter
+    force_apt_get: yes
+#    update_cache: yes
 
-- name: systemd mysqld_exporter
+- name: make prometheus home folder
+  file:
+    path: /var/lib/prometheus
+    state: directory
+    owner: prometheus
+
+- name: upload cnf file
   template:
-    src: mysqld_exporter.service.j2
-    dest: /etc/systemd/system/mysqld_exporter.service
+    src: templates/my.cnf.j2 
+    dest: /var/lib/prometheus/.my.cnf
+
+- name: upload default config file
+  copy:
+    src: prometheus-mysqld-exporter
+    dest: /etc/default/prometheus-mysqld-exporter
+
+- name: change systemd service file
+  copy:
+    src: prometheus-mysqld-exporter.service
+    dest: /etc/systemd/system/multi-user.target.wants/prometheus-mysqld-exporter.service
   notify:
     - daemon reload
 
 - name: start exporter
   service:
-    name: mysqld_exporter
-    state: started
-    enabled: yes
+    name: prometheus-mysqld-exporter
+    state: restarted
+#    enabled: yes

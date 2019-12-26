@@ -4,12 +4,7 @@ jobs:
     port: 9090
     targets:
       - localhost
-  - name: ping
-    port: 9105
-    targets:
-      - infra01.meo.ttu
-      - infra02.meo.ttu
-  - name: linux
+  - name: node exporter
     port: 9100
     targets:
       - infra01.meo.ttu
@@ -22,10 +17,8 @@ jobs:
   - name: mysqld_exporter
     port: 9104
     targets:
-      - infra01.meo.ttu
       - infra02.meo.ttu
   - name: apache_exporter
     port: 9117
     targets:
       - infra01.meo.ttu
-      - infra02.meo.ttu

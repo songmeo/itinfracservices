@@ -3,8 +3,8 @@ Description=Prometheus
 
 
 [Service]
-User=root
-ExecStart=/opt/prometheus/prometheus --config.file=/opt/prometheus/prometheus.yml
+User=prometheus
+ExecStart=/usr/bin/prometheus --config.file=/etc/prometheus/prometheus.yml
 
 [Install]
 WantedBy=multi-user.target
