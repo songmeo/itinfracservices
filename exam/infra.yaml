@@ -21,6 +21,7 @@
   roles:
     - { role: wordpress, tags: wordpress }
     - { role: haproxy, tags: haproxy }
+    - { role: haproxy_exporter, tags: haproxy_exporter }
 
 - name: node_exporter
   hosts: linux
@@ -35,11 +36,6 @@
   roles:
     - mysqld_exporter
   
-- name: apache
-  hosts: wordpress
-  roles:  
-    - apache_exporter
-
 - name: influx
   become: yes
   hosts: influx
@@ -52,5 +48,5 @@
   hosts: prometheus
   become: yes
   roles:
-    - prometheus
+    - { role: prometheus, tags: prometheus }
     - grafana

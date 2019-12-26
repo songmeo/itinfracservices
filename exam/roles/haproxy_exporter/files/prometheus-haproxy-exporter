@@ -1,0 +1,1 @@
+ARGS="--haproxy.scrape-uri="http://www.meo.ttu/proxy-stats;csv""

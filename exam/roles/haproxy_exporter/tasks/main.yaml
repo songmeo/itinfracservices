@@ -1,0 +1,17 @@
+- name: install haproxy exporter
+  apt:
+    name: prometheus-haproxy-exporter
+    force_apt_get: yes
+
+- name: update default argument file
+  copy:
+    src: prometheus-haproxy-exporter
+    dest: /etc/default/prometheus-haproxy-exporter
+  notify:
+    - daemon reload
+    - haproxy exporter restart
+
+- name: enable exporter
+  service:
+    name: prometheus-haproxy-exporter
+    state: started  

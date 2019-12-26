@@ -1,0 +1,7 @@
+- name: daemon reload
+  command: systemctl daemon-reload
+
+- name: haproxy exporter restart
+  service:
+    name: prometheus-haproxy-exporter
+    state: restarted 
