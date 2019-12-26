@@ -1,7 +1,10 @@
-[linux]
-infra01 ansible_host=192.168.56.3 ansible_user=kat
-infra02 ansible_host=192.168.56.4 ansible_user=kat
+[influx]
+infra02 ansible_host=192.168.56.5
 
-[nat]
-infra01_legacy ansible_host=127.0.0.1 ansible_port=2222 ansible_user=kat
-infra02_legacy ansible_host=127.0.0.1 ansible_port=3333 ansible_user=kat
+[linux]
+infra01 ansible_host=192.168.56.4 
+infra02 ansible_host=192.168.56.5 
+
+[linux_legacy]
+infra01_legacy ansible_host=127.0.0.1 ansible_port=2222 
+infra02_legacy ansible_host=127.0.0.1 ansible_port=3333 

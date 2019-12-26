@@ -3,7 +3,7 @@ zone "meo.ttu" {
 	type master;
 	file "/etc/bind/db.meo";
   allow-transfer {
-    192.168.56.4;
+    192.168.56.5;
     192.168.56.1;
   };
 	notify yes;
@@ -21,7 +21,7 @@ zone "56.168.192.in-addr.arpa" {
 	type master;
 	file "/etc/bind/db.meo.ptr";
   allow-transfer {
-    192.168.56.4;
+    192.168.56.5;
     192.168.56.1;
   };
 {% else %}

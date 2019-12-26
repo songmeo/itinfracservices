@@ -1,9 +1,11 @@
 ---
 - name: init
   become: yes
-  hosts: nat
+  hosts: linux_legacy
   roles:
     - init
+  tags:
+    - init 
 
 - name: bind
   become: yes
@@ -15,8 +17,10 @@
 
 - name: influx
   become: yes
-  hosts: infra02
+  hosts: influx
   roles:
+    - influxdb
+  tags:
     - influxdb
 
 - name: grafana
