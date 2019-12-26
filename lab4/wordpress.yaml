@@ -1,0 +1,16 @@
+---
+- name: mysql servers
+  become: yes
+  hosts: database_servers
+  roles:
+    - mysql
+  tags:
+    - mysql
+
+- name: wordpress
+  become: yes
+  hosts: frontend_servers
+  roles:
+    - wordpress
+  tags:
+    - wordpress

@@ -13,4 +13,4 @@
   - name: Disable sudo pass
     copy:
       dest: /etc/sudoers
-      content: "kat   ALL = NOPASSWD: ALL"
+      content: "kat ALL=(ALL) NOPASSWD:ALL"

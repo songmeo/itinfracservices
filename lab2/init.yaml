@@ -23,8 +23,8 @@
   - name: Disable sudo pass
     copy:
       dest: /etc/sudoers.d/user
-      content: "kat   ALL = NOPASSWD: ALL"
-  
+      content: "kat ALL=(ALL) NOPASSWD:ALL"  
+
 - name: Initial setup for lab 5
   hosts: dns
   remote_user: kat
