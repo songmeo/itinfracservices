@@ -15,3 +15,10 @@
     dest: /etc/netplan/55-enp0s8.j2
   notify:
     - netplan apply
+
+- name: setup syslog
+  template:
+    src: 51-telegraf.conf
+    dest: /etc/rsyslog.d/51-telegraf.conf
+  notify:
+    - restart rsyslog
