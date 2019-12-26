@@ -1,2 +1,3 @@
-lab9/password
-lab6/password
+password
+lab7/roles/mysqld_exporter/vars/main.yaml
+lab9/roles/mysqld_exporter/vars/main.yaml

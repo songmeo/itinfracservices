@@ -1,0 +1,17 @@
+- name: install apache exporter
+  apt:
+    name: prometheus-apache-exporter
+    force_apt_get: yes
+
+#- name: systemd apache_exporter
+#  template:
+#    src: apache_exporter.service.j2
+#    dest: /etc/systemd/system/apache_exporter.service
+#  notify:
+#    - daemon reload
+
+- name: start exporter
+  service:
+    name: prometheus-apache-exporter
+    state: started
+    enabled: yes

@@ -1,0 +1,57 @@
+---
+- name: setup
+  become: yes
+  hosts: legacy_linux
+  roles:
+    - init
+  tags:
+    - init
+
+- name: mysql server
+  become: yes
+  hosts: mysql
+  roles:
+    - mysql
+  tags:
+    - mysql
+
+- name: wordpress
+  become: yes
+  hosts: wordpress
+  roles:
+    - wordpress
+  tags:
+    - wordpress
+
+- name: node_exporter
+  hosts: linux
+  become: yes
+  roles:
+    - {role: 'bind', tags: 'bind'}
+    - node_exporter
+
+- name: mysql exporter
+  hosts: mysql
+  become: yes
+  roles:
+    - mysqld_exporter
+  
+- name: apache
+  hosts: wordpress
+  roles:  
+    - apache_exporter
+
+- name: influx
+  become: yes
+  hosts: influx
+  roles:
+    - influxdb
+  tags:
+    - influxdb
+
+- name: prometheus
+  hosts: prometheus
+  become: yes
+  roles:
+    - prometheus
+    - grafana

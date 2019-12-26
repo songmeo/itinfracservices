@@ -1,0 +1,44 @@
+- name: create mysql user
+  mysql_user:
+    name: "{{ db_user }}"
+    password: "{{ db_password }}"
+    priv: "*.*:REPLICATION CLIENT,PROCESS"
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+#  ignore_errors: True
+  tags:
+    - create_user
+
+- name: install
+  apt:
+    name: prometheus-mysqld-exporter
+    force_apt_get: yes
+#    update_cache: yes
+
+- name: make prometheus home folder
+  file:
+    path: /var/lib/prometheus
+    state: directory
+    owner: prometheus
+
+- name: upload cnf file
+  template:
+    src: templates/my.cnf.j2 
+    dest: /var/lib/prometheus/.my.cnf
+
+- name: upload default config file
+  copy:
+    src: prometheus-mysqld-exporter
+    dest: /etc/default/prometheus-mysqld-exporter
+
+- name: change systemd service file
+  copy:
+    src: prometheus-mysqld-exporter.service
+    dest: /etc/systemd/system/multi-user.target.wants/prometheus-mysqld-exporter.service
+  notify:
+    - daemon reload
+
+- name: start exporter
+  service:
+    name: prometheus-mysqld-exporter
+    state: restarted
+#    enabled: yes

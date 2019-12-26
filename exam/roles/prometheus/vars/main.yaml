@@ -1,0 +1,24 @@
+---
+jobs:
+  - name: prometheus
+    port: 9090
+    targets:
+      - localhost
+  - name: node exporter
+    port: 9100
+    targets:
+      - infra01.meo.ttu
+      - infra02.meo.ttu
+  - name: bind
+    port: 9119
+    targets:
+      - ns1.meo.ttu
+      - ns2.meo.ttu
+  - name: mysqld_exporter
+    port: 9104
+    targets:
+      - infra02.meo.ttu
+  - name: apache_exporter
+    port: 9117
+    targets:
+      - infra01.meo.ttu
