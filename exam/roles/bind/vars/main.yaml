@@ -40,5 +40,5 @@ records:
         address: infra01
       - name: influxdb
         address: infra02
-      - name: wordpress
+      - name: www
         address: infra01

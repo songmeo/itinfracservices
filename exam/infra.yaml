@@ -19,9 +19,8 @@
   become: yes
   hosts: wordpress
   roles:
-    - wordpress
-  tags:
-    - wordpress
+    - { role: wordpress, tags: wordpress }
+    - { role: haproxy, tags: haproxy }
 
 - name: node_exporter
   hosts: linux

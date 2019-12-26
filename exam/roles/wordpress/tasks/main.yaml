@@ -1,7 +1,7 @@
 - name: install docker
   apt:
     name: docker.io
-#    update_cache: yes
+    update_cache: yes
     state: present
 
 - name: install pip
@@ -12,13 +12,26 @@
   pip:
     name: docker-py
 
-- name: start wordpress container
+- name: start wordpress instance 1
   docker_container:
-    name: wordpress
+    name: wp1
     image: wordpress
     state: started
     ports:
       - "8080:80"
+    env:
+      WORDPRESS_DB_HOST: 192.168.56.5:3306
+      WORDPRESS_DB_NAME: "{{ db }}"
+      WORDPRESS_DB_USER: "{{ db_user }}"
+      WORDPRESS_DB_PASSWORD: "{{ db_password }}"
+
+- name: start wordpress instance 2
+  docker_container:
+    name: wp2
+    image: wordpress
+    state: started
+    ports:
+      - "8081:80"
     env:
       WORDPRESS_DB_HOST: 192.168.56.5:3306
       WORDPRESS_DB_NAME: "{{ db }}"
