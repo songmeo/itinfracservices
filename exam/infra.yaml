@@ -35,6 +35,8 @@
   become: yes
   roles:
     - mysqld_exporter
+  tags:
+    - mysqld_exporter
   
 - name: influx
   become: yes

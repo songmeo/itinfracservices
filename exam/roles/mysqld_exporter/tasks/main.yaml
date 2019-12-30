@@ -4,9 +4,8 @@
     password: "{{ db_password }}"
     priv: "*.*:REPLICATION CLIENT,PROCESS"
     login_unix_socket: /var/run/mysqld/mysqld.sock
-#  ignore_errors: True
-  tags:
-    - create_user
+  notify:
+    - restart mysql
 
 - name: install
   apt:
@@ -30,15 +29,15 @@
     src: prometheus-mysqld-exporter
     dest: /etc/default/prometheus-mysqld-exporter
 
+- name: start exporter
+  service:
+    name: prometheus-mysqld-exporter
+    state: started
+    enabled: yes
+
 - name: change systemd service file
   copy:
     src: prometheus-mysqld-exporter.service
     dest: /etc/systemd/system/multi-user.target.wants/prometheus-mysqld-exporter.service
   notify:
     - daemon reload
-
-- name: start exporter
-  service:
-    name: prometheus-mysqld-exporter
-    state: restarted
-    enabled: yes
