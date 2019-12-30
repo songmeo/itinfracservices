@@ -24,11 +24,17 @@
   template:
     src: templates/my.cnf.j2 
     dest: /var/lib/prometheus/.my.cnf
+  notify:
+    - restart mysql
+    - restart mysqld exporter
 
 - name: upload default config file
-  copy:
+  template:
     src: prometheus-mysqld-exporter
     dest: /etc/default/prometheus-mysqld-exporter
+  notfiy:
+    - restart mysql
+    - restart mysqld-exporter
 
 - name: start exporter
   service:

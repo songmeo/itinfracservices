@@ -1,0 +1,1 @@
+DATA_SOURCE_NAME="prometheus:{{ db_password }}@unix(/var/run/mysqld/mysqld.sock)/"

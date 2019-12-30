@@ -1,5 +1,8 @@
 - name: daemon reload
   shell: "systemctl daemon-reload"
 
-- name: mysql restart
+- name: restart mysql
   shell: "systemctl restart mysql"
+
+- name: restart mysqld exporter
+  shell: " systemctl restart prometheus-mysqld-exporter"
