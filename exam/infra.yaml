@@ -49,4 +49,4 @@
   become: yes
   roles:
     - { role: prometheus, tags: prometheus }
-    - grafana
+    - { role: grafana, tags: grafana }

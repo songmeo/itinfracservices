@@ -1,7 +1,7 @@
 - name: install docker
   apt:
     name: docker.io
-    update_cache: yes
+#    update_cache: yes
     state: present
 
 - name: install pip
@@ -17,6 +17,7 @@
     name: wp1
     image: wordpress
     state: started
+    restart_policy: always
     ports:
       - "8080:80"
     env:
@@ -30,6 +31,7 @@
     name: wp2
     image: wordpress
     state: started
+    restart_policy: always
     ports:
       - "8081:80"
     env:

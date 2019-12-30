@@ -41,4 +41,4 @@
   service:
     name: prometheus-mysqld-exporter
     state: restarted
-#    enabled: yes
+    enabled: yes

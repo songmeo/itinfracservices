@@ -1,7 +1,7 @@
 - name: install
   apt:
     name: haproxy
-    update_cache: yes
+#    update_cache: yes
 
 - name: enable
   service:
