@@ -1,2 +1,2 @@
-# itinfracservices
-These are lab solutions for [ICA0002 2019 autum semester](https://github.com/romankuchin/itinfraservices)
+# ICA0002
+These are lab solutions for [IT Infracstructure](https://github.com/romankuchin/itinfraservices) 2019 autum semester
